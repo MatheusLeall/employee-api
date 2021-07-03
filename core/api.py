@@ -72,6 +72,15 @@ def get_employee(request, employee_id: str):
     return employee
 
 
+@api.put("employees/{employee_id}", response=EmployeeOut)
+def update_employee(request, employee_id: str, payload: EmployeeIn):
+    employee = get_object_or_404(Employee, id=employee_id)
+    for attr, value in payload.dict().items():
+        setattr(employee, attr, value)
+    employee.save()
+    return employee
+
+
 @api.post("departments/", response=DepartmentOut)
 def create_department(request, payload: DepartmentIn):
     department = Department.objects.create(**payload.dict())
