@@ -114,3 +114,10 @@ def update_department(request, department_id: int, payload: DepartmentIn):
         setattr(department, attr, value)
     department.save()
     return department
+
+
+@api.delete("departments/{department_id}")
+def delete_department(request, department_id: int):
+    department = get_object_or_404(Department, id=department_id)
+    department.delete()
+    return {"success": f"Department {department.title} was deleted with success!"}
