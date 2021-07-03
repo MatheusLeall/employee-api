@@ -1,5 +1,5 @@
 from datetime import date
-from typing import List
+from typing import Any, List
 
 from django.shortcuts import get_object_or_404
 from ninja import NinjaAPI, Schema
@@ -17,7 +17,7 @@ class EmployeeIn(Schema):
 
 
 class EmployeeOut(Schema):
-    id: str
+    id: Any
     first_name: str
     last_name: str
     department_id: int = None  # The None indicate that this attribute is optional
