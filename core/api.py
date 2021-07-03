@@ -17,6 +17,7 @@ class EmployeeIn(Schema):
 
 
 class EmployeeOut(Schema):
+    id: str
     first_name: str
     last_name: str
     department_id: int = None  # The None indicate that this attribute is optional
@@ -79,6 +80,13 @@ def update_employee(request, employee_id: str, payload: EmployeeIn):
         setattr(employee, attr, value)
     employee.save()
     return employee
+
+
+@api.delete("employees/{employee_id}")
+def delete_employee(request, employee_id: str):
+    employee = get_object_or_404(Employee, id=employee_id)
+    employee.delete()
+    return {"Success": f"The employee with ID={employee_id} was deleted with success"}
 
 
 @api.post("departments/", response=DepartmentOut)
