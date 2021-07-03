@@ -105,3 +105,12 @@ def list_departments(request):
 def get_department(request, department_id: int):
     department = get_object_or_404(Department, id=department_id)
     return department
+
+
+@api.put("departments/{department_id}", response=DepartmentOut)
+def update_department(request, department_id: int, payload: DepartmentIn):
+    department = get_object_or_404(Department, id=department_id)
+    for attr, value in payload.dict().items():
+        setattr(department, attr, value)
+    department.save()
+    return department
