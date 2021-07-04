@@ -33,7 +33,7 @@ class DepartmentOut(Schema):
     title: str
 
 
-@api.post("employees/")
+@api.post("employees/", response=EmployeeOut)
 def create_employee(request, payload: EmployeeIn):
     """Create a new employee
 
@@ -50,7 +50,7 @@ def create_employee(request, payload: EmployeeIn):
         id (str): Expected return is a uuid of the created user
     """
     employee = Employee.objects.create(**payload.dict())
-    return {"id": employee.id}
+    return employee
 
 
 @api.get("employees/", response=List[EmployeeOut])
